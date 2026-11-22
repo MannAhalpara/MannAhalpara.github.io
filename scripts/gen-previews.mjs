@@ -16,7 +16,7 @@ const H = 600;
 const CELL = 4; // px per dither cell
 const CW = W / CELL;
 const CH = H / CELL;
-const INK = [14, 14, 14];
+const INK = [30, 20, 20];
 
 /* ---- tiny PNG encoder (RGBA, 8-bit) ---- */
 const crcTable = new Uint32Array(256).map((_, n) => {

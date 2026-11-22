@@ -47,8 +47,8 @@ export default function MemoryField({ className }: { className?: string }) {
     let H = 0;
     let dpr = 1;
     let field: Field | null = null;
-    let ink = "#0e0e0e";
-    const accent = "#ff4a1c";
+    let ink = "#1E1414";
+    let accent = "#7B1E22";
     let progress = 0; // scroll compression 0..1
     let running = false;
     let visible = true;
@@ -56,9 +56,10 @@ export default function MemoryField({ className }: { className?: string }) {
     const mouse = { x: -9999, y: -9999, tx: -9999, ty: -9999, active: false };
     const seed = Math.random() * 10;
 
-    const readInk = () => {
-      ink =
-        getComputedStyle(document.documentElement).getPropertyValue("--ink").trim() || "#0e0e0e";
+    const readThemeColors = () => {
+      const cs = getComputedStyle(document.documentElement);
+      ink = cs.getPropertyValue("--ink").trim() || "#1E1414";
+      accent = cs.getPropertyValue("--accent-text").trim() || "#7B1E22";
     };
 
     const build = () => {
@@ -240,7 +241,7 @@ export default function MemoryField({ className }: { className?: string }) {
       cancelAnimationFrame(raf);
     };
 
-    readInk();
+    readThemeColors();
     build();
     draw(0);
     canvas.style.opacity = "1";
@@ -280,7 +281,7 @@ export default function MemoryField({ className }: { className?: string }) {
     const onVis = () => (document.hidden ? stop() : start());
     const onTheme = () => {
       requestAnimationFrame(() => {
-        readInk();
+        readThemeColors();
         if (!running) draw(performance.now());
       });
     };

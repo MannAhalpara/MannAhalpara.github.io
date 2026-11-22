@@ -24,7 +24,7 @@ export function Research() {
           <div className="lg:sticky lg:top-28">
             <p className="mono mb-6 inline-flex items-center gap-2.5">
               <span className="live-dot" aria-hidden="true" />
-              Now — Sentic Team, NTU Singapore
+              <span className="text-accent-text">Now</span> — Sentic Team, NTU Singapore
             </p>
             <h3 className="display text-[clamp(40px,4.6vw,72px)]">{r.role}</h3>
             <p className="mt-3 text-[18px]">{r.org}</p>

@@ -45,7 +45,7 @@ export function Cursor() {
         gsap.to(r, {
           width: text ? 84 : active && !isText ? 44 : 28,
           height: text ? 84 : active && !isText ? 44 : 28,
-          backgroundColor: text ? "var(--accent)" : "rgba(255,74,28,0)",
+          backgroundColor: text ? "var(--accent)" : "transparent",
           duration: 0.35,
           ease: "expo.out",
         });
@@ -79,7 +79,7 @@ export function Cursor() {
         ref={ring}
         className="border-accent fixed top-0 left-0 grid size-7 place-items-center rounded-full border"
       >
-        <span ref={label} className="mono text-[10px] font-medium text-[#0e0e0e] opacity-0" />
+        <span ref={label} className="mono text-accent-ink text-[10px] font-medium opacity-0" />
       </div>
       <div ref={dot} className="bg-ink fixed top-0 left-0 size-1.5 rounded-full" />
     </div>

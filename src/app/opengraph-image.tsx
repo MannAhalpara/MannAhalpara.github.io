@@ -32,7 +32,7 @@ export default async function OG() {
     }
   }
 
-  const ink = "#0E0E0E";
+  const ink = "#1E1414";
   return new ImageResponse(
     <div
       style={{
@@ -40,7 +40,7 @@ export default async function OG() {
         height: "100%",
         display: "flex",
         position: "relative",
-        background: "#EDEBE6",
+        background: "#F3EEE6",
         color: ink,
         fontFamily: "Mono",
       }}
@@ -55,7 +55,7 @@ export default async function OG() {
             bottom: 0,
             left: 40 + i * 93.3,
             width: 1,
-            background: "rgba(14,14,14,0.07)",
+            background: "rgba(30,20,20,0.07)",
           }}
         />
       ))}
@@ -92,7 +92,7 @@ export default async function OG() {
         >
           <span>MEM_01 / INDEX</span>
           <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ width: 12, height: 12, borderRadius: 12, background: "#FF4A1C" }} />
+            <span style={{ width: 12, height: 12, borderRadius: 12, background: "#7B1E22" }} />
             AHMEDABAD, IN — {identity.coords}
           </span>
         </div>
@@ -124,7 +124,7 @@ export default async function OG() {
           }}
         >
           <span>AI/ML RESEARCHER — CONVERSATIONAL AI · LLMS · IR</span>
-          <span style={{ background: "#FF4A1C", padding: "4px 10px" }}>
+          <span style={{ background: "#7B1E22", color: "#F3EEE6", padding: "4px 10px" }}>
             RESEARCH INTERN @ NTU SENTIC
           </span>
         </div>

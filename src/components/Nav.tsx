@@ -74,7 +74,7 @@ export function Nav() {
           className={cn(
             "mx-auto flex h-14 max-w-[1600px] items-center justify-between gap-4 rounded-full border pr-2 pl-5 backdrop-blur-md transition-colors duration-500",
             open
-              ? "border-[#edebe6]/20 bg-[#0e0e0e]/70 text-[#edebe6]"
+              ? "border-paper/20 bg-ink/70 text-paper"
               : "border-line-strong bg-paper/80",
           )}
         >
@@ -111,7 +111,7 @@ export function Nav() {
                       className={cn(
                         "transition-all duration-300 ease-(--ease-expo)",
                         on
-                          ? "text-accent opacity-100"
+                          ? "text-accent-text opacity-100"
                           : "-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
                       )}
                     >
@@ -123,7 +123,7 @@ export function Nav() {
                       className={cn(
                         "transition-all duration-300 ease-(--ease-expo)",
                         on
-                          ? "text-accent opacity-100"
+                          ? "text-accent-text opacity-100"
                           : "translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100",
                       )}
                     >
@@ -180,7 +180,7 @@ export function Nav() {
                   style={{ "--i": i } as React.CSSProperties}
                   className="menu-item display flex items-baseline gap-3 py-[0.05em] text-[clamp(56px,16vw,120px)] leading-[0.95]"
                 >
-                  <span className="dot text-accent text-[14px]">
+                  <span className="dot text-accent-text text-[14px]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   {label}

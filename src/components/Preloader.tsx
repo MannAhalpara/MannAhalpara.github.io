@@ -111,7 +111,7 @@ export function Preloader() {
           style={{ transitionDelay: `${150 + Math.abs(i - (PANELS - 1) / 2) * 50}ms` }}
         />
       ))}
-      <div className="preloader__meta pointer-events-none absolute inset-0 flex flex-col justify-end p-[var(--gutter)] text-[#edebe6]">
+      <div className="preloader__meta pointer-events-none absolute inset-0 flex flex-col justify-end p-[var(--gutter)] text-paper">
         <div className="flex items-end justify-between gap-6">
           <span ref={count} className="dot text-[clamp(72px,18vw,240px)] leading-[0.8]">
             000
@@ -122,8 +122,8 @@ export function Preloader() {
             click to skip
           </span>
         </div>
-        <span className="mt-6 block h-px w-full bg-[#edebe6]/15">
-          <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-[#ff4a1c]" />
+        <span className="mt-6 block h-px w-full bg-paper/15">
+          <span ref={bar} className="bg-accent block h-px w-full origin-left scale-x-0" />
         </span>
       </div>
     </div>

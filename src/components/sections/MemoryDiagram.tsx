@@ -58,7 +58,7 @@ export function MemoryDiagram() {
             width="472"
             height="384"
             fill="none"
-            stroke="var(--accent)"
+            stroke="var(--accent-text)"
             strokeWidth="1"
             strokeDasharray="5 5"
             data-draw-fade
@@ -67,7 +67,7 @@ export function MemoryDiagram() {
           <g data-draw-fade data-order="2" transform="translate(46 200)">
             <rect x="0" y="6" width="198" height="26" fill="var(--paper)" />
             {/* lock */}
-            <g transform="translate(8 9)" fill="none" stroke="var(--accent)" strokeWidth="1.4">
+            <g transform="translate(8 9)" fill="none" stroke="var(--accent-text)" strokeWidth="1.4">
               <rect x="1" y="8" width="14" height="11" />
               <path d="M4 8V5a4 4 0 0 1 8 0v3" />
             </g>

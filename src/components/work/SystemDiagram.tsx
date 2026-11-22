@@ -87,7 +87,7 @@ export function SystemDiagram({
           <defs>
             {[
               { mid: marker, color: "currentColor" },
-              { mid: markerAccent, color: "var(--accent)" },
+              { mid: markerAccent, color: "var(--accent-text)" },
             ].map((m) => (
               <marker
                 key={m.mid}
@@ -113,7 +113,7 @@ export function SystemDiagram({
                 width={VW - 68}
                 height={boundaryBottom - (rows[b.from]!.y - 18)}
                 fill="none"
-                stroke="var(--accent)"
+                stroke="var(--accent-text)"
                 strokeWidth="1"
                 strokeDasharray="5 5"
                 data-draw-fade
@@ -135,7 +135,7 @@ export function SystemDiagram({
                   x="10"
                   y="20"
                   className="font-mono text-[11px] tracking-[0.08em]"
-                  fill="var(--accent)"
+                  fill="var(--accent-text)"
                 >
                   {b.label}
                 </text>
@@ -163,7 +163,7 @@ export function SystemDiagram({
 
           {/* stages */}
           {rows.map(({ r, y: ry, h }, i) => {
-            const stroke = r.accent ? "var(--accent)" : "currentColor";
+            const stroke = r.accent ? "var(--accent-text)" : "currentColor";
             return (
               <g key={r.label}>
                 <text
@@ -290,7 +290,7 @@ export function SystemDiagram({
                           width="22"
                           height="42"
                           fill={win ? "var(--accent)" : "none"}
-                          stroke={win ? "var(--accent)" : "currentColor"}
+                          stroke={win ? "var(--accent-text)" : "currentColor"}
                           strokeWidth="1"
                           opacity={win ? 1 : 0.55}
                         />
@@ -299,7 +299,7 @@ export function SystemDiagram({
                           y={ry + 126}
                           textAnchor="middle"
                           className="font-mono text-[8.5px] tracking-[0.04em]"
-                          fill={win ? "var(--accent)" : "currentColor"}
+                          fill={win ? "var(--accent-text)" : "currentColor"}
                           opacity={win ? 1 : 0.6}
                         >
                           {l}
@@ -322,7 +322,7 @@ export function SystemDiagram({
                       x="4"
                       y={ry + h - 22}
                       className="font-mono text-[9px] tracking-[0.08em]"
-                      fill="var(--accent)"
+                      fill="var(--accent-text)"
                     >
                       {r.input}
                     </text>
@@ -331,7 +331,7 @@ export function SystemDiagram({
                       y1={ry + h - 14}
                       x2={X - 4}
                       y2={ry + h - 14}
-                      stroke="var(--accent)"
+                      stroke="var(--accent-text)"
                       strokeWidth="1"
                       markerEnd={`url(#${markerAccent})`}
                     />

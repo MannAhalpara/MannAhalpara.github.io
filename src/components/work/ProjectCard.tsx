@@ -54,7 +54,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
             </div>
           ))}
           <div
-            className="border-line-strong group-hover:bg-accent col-start-3 row-span-2 row-start-1 grid place-items-center border-r border-b text-[22px] transition-colors duration-300 group-hover:text-[#0e0e0e]"
+            className="border-line-strong group-hover:bg-accent group-hover:text-accent-ink col-start-3 row-span-2 row-start-1 grid place-items-center border-r border-b text-[22px] transition-colors duration-300"
             aria-hidden="true"
           >
             <span className="transition-transform duration-500 ease-(--ease-expo) group-hover:translate-x-0.5 group-hover:-translate-y-0.5">

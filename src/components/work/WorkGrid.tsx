@@ -135,7 +135,7 @@ export function WorkGrid() {
                 className={cn(
                   "pill pill-sm",
                   on
-                    ? "border-accent bg-accent text-[#0e0e0e]"
+                    ? "border-accent bg-accent text-accent-ink"
                     : "border-line-strong hover:border-ink",
                 )}
               >

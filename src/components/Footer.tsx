@@ -32,7 +32,7 @@ export function Footer() {
             {footer.ctaLine1}
           </RevealText>
           <span className="mt-[0.06em] block">
-            <span className="bg-accent box-decoration-clone px-[0.06em] text-[#0e0e0e]">
+            <span className="bg-accent text-accent-ink box-decoration-clone px-[0.06em]">
               <RevealText as="span" type="chars" delay={0.15}>
                 {footer.ctaLine2}
               </RevealText>

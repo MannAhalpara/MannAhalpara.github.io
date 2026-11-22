@@ -4,15 +4,16 @@
 
 /* ---------------------------------------------------------------- tokens */
 :root {
-  --paper: #edebe6;
-  --surface: #f6f5f2;
-  --ink: #0e0e0e;
-  --muted: #5f5f5a; /* darker than #6B6B66 to pass AA on paper */
-  --line: rgba(14, 14, 14, 0.12);
-  --line-strong: rgba(14, 14, 14, 0.28);
-  --grid: rgba(14, 14, 14, 0.06);
-  --accent: #ff4a1c;
-  --accent-ink: #0e0e0e;
+  --paper: #F3EEE6; /* bone background */
+  --surface: #FAF7F2; /* cards, panels */
+  --ink: #1E1414; /* main text */
+  --muted: #6A5D57; /* secondary text, small mono labels */
+  --line: #1E14141F;
+  --line-strong: #1E141447;
+  --grid: #1E14140F;
+  --accent: #7B1E22; /* oxblood: fills (buttons, banner, dots) */
+  --accent-ink: #F3EEE6; /* text ON the accent (now light, was dark) */
+  --accent-text: #7B1E22; /* accent used as text (nav brackets, links) */
   --invert: 0;
   --gutter: clamp(16px, 3vw, 40px);
   --nav-h: 64px;
@@ -21,25 +22,31 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0e0e0e;
-    --surface: #161615;
-    --ink: #edebe6;
-    --muted: #a3a39c;
-    --line: rgba(237, 235, 230, 0.14);
-    --line-strong: rgba(237, 235, 230, 0.3);
-    --grid: rgba(237, 235, 230, 0.05);
+    --paper: #160E0E;
+    --surface: #221616;
+    --ink: #F3EEE6;
+    --muted: #B3A69E;
+    --line: #F3EEE624;
+    --line-strong: #F3EEE64D;
+    --grid: #F3EEE60D;
+    --accent: #7B1E22;
+    --accent-ink: #F3EEE6;
+    --accent-text: #E38A84; /* lighter rose so accent text is readable on dark */
     --invert: 1;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #0e0e0e;
-  --surface: #161615;
-  --ink: #edebe6;
-  --muted: #a3a39c;
-  --line: rgba(237, 235, 230, 0.14);
-  --line-strong: rgba(237, 235, 230, 0.3);
-  --grid: rgba(237, 235, 230, 0.05);
+  --paper: #160E0E;
+  --surface: #221616;
+  --ink: #F3EEE6;
+  --muted: #B3A69E;
+  --line: #F3EEE624;
+  --line-strong: #F3EEE64D;
+  --grid: #F3EEE60D;
+  --accent: #7B1E22;
+  --accent-ink: #F3EEE6;
+  --accent-text: #E38A84;
   --invert: 1;
   color-scheme: dark;
 }
@@ -52,6 +59,8 @@
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-text: var(--accent-text);
   --font-display: var(--font-anton), "Impact", "Arial Narrow", sans-serif;
   --font-dot: var(--font-doto), ui-monospace, monospace;
   --font-serif: var(--font-instrument), Georgia, serif;
@@ -93,9 +102,26 @@
     color: var(--accent-ink);
   }
   :focus-visible {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--accent-text);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+  * {
+    scrollbar-color: var(--muted) var(--paper);
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--paper);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted);
   }
   [id] {
     scroll-margin-top: calc(var(--nav-h) + 24px);
@@ -349,7 +375,7 @@
 }
 @keyframes memflash {
   0% {
-    box-shadow: inset 0 0 0 2px var(--accent);
+    box-shadow: inset 0 0 0 2px var(--accent-text);
     background-color: color-mix(in srgb, var(--accent) 10%, transparent);
   }
   100% {
@@ -415,8 +441,8 @@
   grid-template-columns: repeat(6, 1fr);
 }
 .preloader__panel {
-  background: #0e0e0e;
-  border-right: 1px solid rgba(237, 235, 230, 0.08);
+  background: #160E0E;
+  border-right: 1px solid rgba(243, 238, 230, 0.08);
 }
 html.no-preloader .preloader {
   display: none;

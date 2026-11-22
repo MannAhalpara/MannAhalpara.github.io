@@ -28,7 +28,9 @@ export function NotFoundGlitch() {
     let t = 0;
 
     const draw = () => {
-      const ink = getComputedStyle(document.documentElement).getPropertyValue("--ink").trim();
+      const cs = getComputedStyle(document.documentElement);
+      const ink = cs.getPropertyValue("--ink").trim() || "#1E1414";
+      const accent = cs.getPropertyValue("--accent-text").trim() || "#7B1E22";
       ctx.clearRect(0, 0, c.width, c.height);
       const tear = !reduce && Math.random() < 0.18;
       const tearRow = Math.floor(Math.random() * rows);
@@ -49,7 +51,7 @@ export function NotFoundGlitch() {
         }
       }
       if (tear) {
-        ctx.fillStyle = "#ff4a1c";
+        ctx.fillStyle = accent;
         ctx.fillRect(0, tearRow * cell, c.width, 2);
       }
     };

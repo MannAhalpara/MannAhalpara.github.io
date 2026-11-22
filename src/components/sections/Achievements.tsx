@@ -29,7 +29,7 @@ export function Achievements() {
             </span>
             <span
               aria-hidden="true"
-              className="text-accent col-start-3 row-start-1 -translate-x-2 text-right text-[20px] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:col-start-4"
+              className="text-accent-text col-start-3 row-start-1 -translate-x-2 text-right text-[20px] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100 md:col-start-4"
             >
               →
             </span>

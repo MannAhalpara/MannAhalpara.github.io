@@ -59,7 +59,7 @@ function Typed({ text, run, delay = 0 }: { text: string; run: boolean; delay?: n
     <>
       {shown}
       {run && shown.length < text.length ? (
-        <span className="bg-accent ml-0.5 inline-block h-[1em] w-[0.5em] translate-y-[0.15em]" />
+        <span className="bg-[var(--accent-text)] ml-0.5 inline-block h-[1em] w-[0.5em] translate-y-[0.15em]" />
       ) : null}
     </>
   );
@@ -124,9 +124,12 @@ export function AskMemory() {
         headingId="ask-title"
       />
 
-      <div className="ticked overflow-hidden bg-[#0e0e0e] text-[#edebe6]">
+      <div
+        className="ticked overflow-hidden bg-[#1E1414] text-[#F3EEE6] dark:bg-[#0E0808]"
+        style={{ "--accent-text": "#E38A84" } as React.CSSProperties}
+      >
         <TickB />
-        <div className="mono flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 text-white/60">
+        <div className="mono flex items-center justify-between gap-4 border-b border-white/10 px-4 py-3 text-[#B3A69E]">
           <span className="flex items-center gap-2">
             <span className="live-dot" aria-hidden="true" />
             memory://mann-ahalpara
@@ -148,11 +151,11 @@ export function AskMemory() {
                 ask(q);
               }}
             >
-              <label htmlFor="ask-input" className="mono mb-2 block text-white/60">
+              <label htmlFor="ask-input" className="mono mb-2 block text-[#B3A69E]">
                 Query
               </label>
-              <div className="flex items-center gap-2 border-b border-white/30 pb-2 focus-within:border-[#ff4a1c]">
-                <span aria-hidden="true" className="mono text-[#ff4a1c]">
+              <div className="flex items-center gap-2 border-b border-white/30 pb-2 focus-within:border-[var(--accent-text)]">
+                <span aria-hidden="true" className="mono text-[var(--accent-text)]">
                   &gt;
                 </span>
                 <input
@@ -164,17 +167,17 @@ export function AskMemory() {
                   placeholder="Type a question…"
                   autoComplete="off"
                   spellCheck={false}
-                  className="w-full bg-transparent py-2 font-mono text-[16px] text-white placeholder:text-white/60 focus:outline-none"
+                  className="w-full bg-transparent py-2 font-mono text-[16px] text-white placeholder:text-[#B3A69E] focus:outline-none"
                 />
                 <button
                   type="submit"
-                  className="pill pill-sm border-[#ff4a1c] bg-[#ff4a1c] text-[#0e0e0e] hover:border-white hover:bg-white"
+                  className="pill pill-sm border-[var(--accent)] bg-[var(--accent)] text-[var(--accent-ink)] hover:border-white hover:bg-white hover:text-[#1E1414]"
                 >
                   Retrieve
                 </button>
               </div>
             </form>
-            <p className="mono mt-8 mb-3 text-white/60">Try</p>
+            <p className="mono mt-8 mb-3 text-[#B3A69E]">Try</p>
             <ul className="flex flex-wrap gap-2">
               {SUGGESTIONS.map((s) => (
                 <li key={s}>
@@ -191,7 +194,7 @@ export function AskMemory() {
                 </li>
               ))}
             </ul>
-            <p className="mono mt-10 max-w-[48ch] leading-relaxed tracking-normal text-white/60 normal-case">
+            <p className="mono mt-10 max-w-[48ch] leading-relaxed tracking-normal text-[#B3A69E] normal-case">
               Local keyword retrieval over this site&apos;s content — no LLM, no data leaves your
               browser.
             </p>
@@ -203,7 +206,7 @@ export function AskMemory() {
             </p>
             {!result ? (
               <div
-                className="mono flex h-full min-h-[300px] flex-col justify-between text-white/60"
+                className="mono flex h-full min-h-[300px] flex-col justify-between text-[#B3A69E]"
                 aria-hidden="true"
               >
                 <span>awaiting query_</span>
@@ -211,7 +214,7 @@ export function AskMemory() {
               </div>
             ) : (
               <div key={result.q + result.ms}>
-                <p className="mono mb-6 text-white/60" aria-hidden="true">
+                <p className="mono mb-6 text-[#B3A69E]" aria-hidden="true">
                   &gt; {result.q}
                   <br />
                   {result.hits.length
@@ -224,7 +227,7 @@ export function AskMemory() {
                       <button
                         type="button"
                         onClick={() => jump(h.passage.anchor)}
-                        className="dot h-fit text-left text-[15px] text-[#ff4a1c] hover:underline"
+                        className="dot h-fit text-left text-[15px] text-[var(--accent-text)] hover:underline"
                         aria-label={`Citation ${i + 1}: go to ${h.passage.source}`}
                       >
                         [{i + 1}]
@@ -236,7 +239,7 @@ export function AskMemory() {
                         >
                           <Typed text={h.snippet} run={animate} delay={i * 380} />
                         </p>
-                        <p className="mono mt-2 flex flex-wrap gap-x-3 text-[10.5px] text-white/60">
+                        <p className="mono mt-2 flex flex-wrap gap-x-3 text-[10.5px] text-[#B3A69E]">
                           <button
                             type="button"
                             className="underline-offset-4 hover:text-white hover:underline"
