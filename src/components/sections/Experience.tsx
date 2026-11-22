@@ -32,7 +32,7 @@ function Entry({
           style={{ perspective: "400px" }}
         >
           <span className="inline-block">{e.start}</span>
-          <span className="text-muted inline-block px-2">—</span>
+          <span className="text-muted inline-block px-2">-</span>
           <span className="inline-block">{e.end}</span>
         </p>
         <p className="mono text-muted mt-2">ENTRY {String(index + 1).padStart(2, "0")}</p>
@@ -64,7 +64,7 @@ function Entry({
             {e.bullets.map((b, i) => (
               <li key={i} className="grid grid-cols-[1.4rem_1fr] text-[16.5px] leading-relaxed">
                 <span aria-hidden="true" className="text-muted">
-                  —
+                  -
                 </span>
                 {b}
               </li>

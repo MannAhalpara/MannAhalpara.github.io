@@ -11,7 +11,7 @@ export default function NotFound() {
       <NotFoundGlitch />
       <h1 className="display mt-8 text-[clamp(52px,10vw,180px)]">Memory not found</h1>
       <p className="serif text-muted mt-4 max-w-[30ch] text-[clamp(24px,2.6vw,38px)] leading-tight">
-        This page was never written — or it was selectively forgotten.
+        This page was never written - or it was selectively forgotten.
       </p>
       <div className="mt-10 flex flex-wrap gap-3">
         <TransitionLink href="/" className="pill pill-ink">

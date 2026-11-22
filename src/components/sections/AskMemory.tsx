@@ -1,37 +1,28 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "@/lib/hooks";
-import { BM25, buildPassages, tokenize, type Hit } from "@/lib/memory-index";
+import { MemoryIndex } from "@/lib/memory-index";
+import {
+  MEMORY_FALLBACK,
+  MEMORY_SUGGESTED,
+  type MemoryEntry,
+  type MemoryLink,
+} from "@/lib/memory-qa";
 import { scrollToTarget } from "@/lib/scroll";
+import { TransitionLink } from "../TransitionLink";
 import { SectionHeader, TickB } from "../SectionHeader";
 
-const SUGGESTIONS = [
-  "What did he build with Qdrant?",
-  "Where is he doing research?",
-  "Best AQI model?",
-  "What is the ICIDS paper about?",
-  "Which projects use Gemini?",
-];
+type Shown = {
+  /** What the visitor asked (or the chip they clicked). */
+  q: string;
+  /** null = nothing cleared the threshold, show the fallback. */
+  entry: MemoryEntry | null;
+  /** Bumped on every ask so the reveal replays even for the same answer. */
+  n: number;
+};
 
-type Result = { q: string; hits: (Hit & { snippet: string })[]; ms: number };
-
-/** Pick the 1–2 sentences of a passage with the most query-term overlap. */
-function snippet(text: string, q: string[]) {
-  const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z0-9])/);
-  const scored = sentences.map((s, i) => {
-    const toks = new Set(tokenize(s));
-    return { s, i, score: q.reduce((n, t) => n + (toks.has(t) ? 1 : 0), 0) };
-  });
-  const best = [...scored]
-    .sort((a, b) => b.score - a.score || a.i - b.i)
-    .slice(0, 2)
-    .sort((a, b) => a.i - b.i);
-  const out = best.map((b) => b.s).join(" ");
-  return out.length > 320 ? `${out.slice(0, 317).trimEnd()}…` : out;
-}
-
-function useTypewriter(text: string, run: boolean, speed = 6) {
+function useTypewriter(text: string, run: boolean, speed = 4) {
   const [n, setN] = useState(0);
   useEffect(() => {
     if (!run || !text) return;
@@ -46,15 +37,9 @@ function useTypewriter(text: string, run: boolean, speed = 6) {
   return run ? text.slice(0, n) : text;
 }
 
-/** Remount per result (via key) so the counter restarts at 0. */
-function Typed({ text, run, delay = 0 }: { text: string; run: boolean; delay?: number }) {
-  const [go, setGo] = useState(delay === 0);
-  useEffect(() => {
-    if (go) return;
-    const id = window.setTimeout(() => setGo(true), delay);
-    return () => window.clearTimeout(id);
-  }, [go, delay]);
-  const shown = useTypewriter(go || !run ? text : "", run);
+/** Remount per answer (via key) so the counter restarts at 0. */
+function Typed({ text, run }: { text: string; run: boolean }) {
+  const shown = useTypewriter(text, run);
   return (
     <>
       {shown}
@@ -65,51 +50,77 @@ function Typed({ text, run, delay = 0 }: { text: string; run: boolean; delay?: n
   );
 }
 
+/** Panel colours as theme tokens, so `.pill-outline` reads correctly on the dark terminal. */
+const panelTokens = { "--ink": "#F3EEE6", "--paper": "#1E1414" } as React.CSSProperties;
+
+function AnswerLink({ link }: { link: MemoryLink }) {
+  const cls = "pill pill-sm pill-outline";
+  const { href, label } = link;
+  if (href.startsWith("#")) {
+    return (
+      <a
+        href={href}
+        className={cls}
+        onClick={(e) => {
+          if (scrollToTarget(href)) e.preventDefault();
+        }}
+      >
+        {label} <span aria-hidden="true">↓</span>
+      </a>
+    );
+  }
+  if (href.startsWith("/work/")) {
+    return (
+      <TransitionLink href={href} className={cls}>
+        {label} <span aria-hidden="true">→</span>
+      </TransitionLink>
+    );
+  }
+  if (href.startsWith("mailto:")) {
+    return (
+      <a href={href} className={cls}>
+        {label} <span aria-hidden="true">↗</span>
+      </a>
+    );
+  }
+  // external sites and the résumé PDF open in a new tab
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cls} data-cursor="OPEN ↗">
+      {label} <span aria-hidden="true">↗</span>
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  );
+}
+
+const chipCls =
+  "rounded-full border border-white/25 px-3 py-1.5 text-left text-[13px] text-white/85 transition-colors hover:border-white hover:text-white";
+
 export function AskMemory() {
-  const passages = useMemo(() => buildPassages(), []);
-  const engine = useMemo(() => new BM25(passages), [passages]);
+  const index = useMemo(() => new MemoryIndex(), []);
+  const suggested = useMemo(
+    () => MEMORY_SUGGESTED.map((id) => index.byId(id)).filter((e): e is MemoryEntry => !!e),
+    [index],
+  );
   const [q, setQ] = useState("");
-  const [result, setResult] = useState<Result | null>(null);
+  const [shown, setShown] = useState<Shown | null>(null);
   const animate = !useReducedMotion();
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const ask = (query: string) => {
     const text = query.trim();
     if (!text) return;
-    const t0 = performance.now();
-    const hits = engine.search(text, 3);
-    const terms = tokenize(text);
-    setResult({
-      q: text,
-      hits: hits.map((h) => ({ ...h, snippet: snippet(h.passage.text, terms) })),
-      ms: performance.now() - t0,
-    });
+    setShown((s) => ({ q: text, entry: index.answer(text), n: (s?.n ?? 0) + 1 }));
   };
 
-  const jump = (anchor: string) => {
-    const el = document.getElementById(anchor);
-    if (!el) return;
-    scrollToTarget(anchor);
-    el.classList.remove("mem-highlight");
-    void el.offsetWidth;
-    el.classList.add("mem-highlight");
-    window.setTimeout(() => el.classList.remove("mem-highlight"), 1700);
-    window.setTimeout(() => {
-      const focusable = el.querySelector<HTMLElement>("a, button, h2, h3");
-      if (focusable) {
-        if (!focusable.matches("a, button")) focusable.setAttribute("tabindex", "-1");
-        focusable.focus({ preventScroll: true });
-      }
-    }, 900);
+  /** Suggested and related chips skip search and show the entry directly. */
+  const show = (entry: MemoryEntry) => {
+    setQ(entry.question);
+    setShown((s) => ({ q: entry.question, entry, n: (s?.n ?? 0) + 1 }));
   };
 
-  const srSummary = result
-    ? result.hits.length
-      ? `${result.hits.length} passages retrieved for “${result.q}”. ${result.hits
-          .map((h, i) => `[${i + 1}] ${h.passage.source}: ${h.snippet}`)
-          .join(" ")}`
-      : `No passages matched “${result.q}”.`
-    : "";
+  const answer = shown ? (shown.entry ?? MEMORY_FALLBACK) : null;
+  const related = answer
+    ? answer.related.map((id) => index.byId(id)).filter((e): e is MemoryEntry => !!e)
+    : [];
 
   return (
     <section
@@ -134,15 +145,11 @@ export function AskMemory() {
             <span className="live-dot" aria-hidden="true" />
             memory://mann-ahalpara
           </span>
-          <span className="hidden sm:inline">bm25 · k1 1.4 · b 0.72 · top-3</span>
         </div>
 
         <div className="grid gap-0 lg:grid-cols-[1fr_1.3fr]">
           <div className="border-b border-white/10 p-5 md:p-8 lg:border-r lg:border-b-0">
-            <p className="text-[19px] leading-snug md:text-[22px]">
-              Ask anything about Mann — e.g.{" "}
-              <em className="serif text-[1.15em] text-white">What did he build with Qdrant?</em>
-            </p>
+            <p className="text-[19px] leading-snug md:text-[22px]">Ask anything about Mann.</p>
             <form
               className="mt-8"
               role="search"
@@ -159,7 +166,6 @@ export function AskMemory() {
                   &gt;
                 </span>
                 <input
-                  ref={inputRef}
                   id="ask-input"
                   type="text"
                   value={q}
@@ -179,84 +185,70 @@ export function AskMemory() {
             </form>
             <p className="mono mt-8 mb-3 text-[#B3A69E]">Try</p>
             <ul className="flex flex-wrap gap-2">
-              {SUGGESTIONS.map((s) => (
-                <li key={s}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setQ(s);
-                      ask(s);
-                    }}
-                    className="rounded-full border border-white/25 px-3 py-1.5 text-left text-[13px] text-white/85 transition-colors hover:border-white hover:text-white"
-                  >
-                    {s}
+              {suggested.map((e) => (
+                <li key={e.id}>
+                  <button type="button" onClick={() => show(e)} className={chipCls}>
+                    {e.question}
                   </button>
                 </li>
               ))}
             </ul>
-            <p className="mono mt-10 max-w-[48ch] leading-relaxed tracking-normal text-[#B3A69E] normal-case">
-              Local keyword retrieval over this site&apos;s content — no LLM, no data leaves your
-              browser.
-            </p>
           </div>
 
           <div className="min-h-[360px] p-5 md:p-8">
-            <p className="sr-only" aria-live="polite" aria-atomic="true">
-              {srSummary}
-            </p>
-            {!result ? (
+            {!shown || !answer ? (
               <div
                 className="mono flex h-full min-h-[300px] flex-col justify-between text-[#B3A69E]"
                 aria-hidden="true"
               >
                 <span>awaiting query_</span>
-                <span>index ready · {passages.length} passages</span>
+                <span>ready</span>
               </div>
-            ) : (
-              <div key={result.q + result.ms}>
-                <p className="mono mb-6 text-[#B3A69E]" aria-hidden="true">
-                  &gt; {result.q}
-                  <br />
-                  {result.hits.length
-                    ? `${result.hits.length} passages · ${result.ms.toFixed(2)} ms`
-                    : "0 passages · nothing in memory matches that. Try a project, tool or place."}
-                </p>
-                <ol className="space-y-6">
-                  {result.hits.map((h, i) => (
-                    <li key={h.passage.id} className="grid grid-cols-[2.4rem_1fr] gap-2">
-                      <button
-                        type="button"
-                        onClick={() => jump(h.passage.anchor)}
-                        className="dot h-fit text-left text-[15px] text-[var(--accent-text)] hover:underline"
-                        aria-label={`Citation ${i + 1}: go to ${h.passage.source}`}
-                      >
-                        [{i + 1}]
-                      </button>
-                      <div>
-                        <p
-                          className="text-[15.5px] leading-relaxed text-white/90"
-                          aria-hidden="true"
-                        >
-                          <Typed text={h.snippet} run={animate} delay={i * 380} />
-                        </p>
-                        <p className="mono mt-2 flex flex-wrap gap-x-3 text-[10.5px] text-[#B3A69E]">
-                          <button
-                            type="button"
-                            className="underline-offset-4 hover:text-white hover:underline"
-                            onClick={() => jump(h.passage.anchor)}
-                            tabIndex={-1}
-                            aria-hidden="true"
-                          >
-                            {h.passage.source} ↗
+            ) : null}
+
+            {/* Always mounted so screen readers pick up each new answer. */}
+            <div aria-live="polite" aria-atomic="true">
+              {shown && answer ? (
+                <div key={shown.n}>
+                  <p className="mono mb-6 text-[#B3A69E]">
+                    <span aria-hidden="true">&gt; </span>
+                    {shown.q}
+                  </p>
+                  <p className="sr-only">{answer.answer}</p>
+                  <p className="text-[17px] leading-relaxed text-white/90" aria-hidden="true">
+                    <Typed text={answer.answer} run={animate} />
+                  </p>
+                </div>
+              ) : null}
+            </div>
+
+            {shown && answer ? (
+              <div key={shown.n} className={animate ? "ask-fade" : undefined}>
+                {answer.links.length ? (
+                  <ul className="mt-8 flex flex-wrap gap-2" style={panelTokens}>
+                    {answer.links.map((l) => (
+                      <li key={l.href + l.label}>
+                        <AnswerLink link={l} />
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+                {related.length ? (
+                  <>
+                    <p className="mono mt-8 mb-3 text-[#B3A69E]">Related</p>
+                    <ul className="flex flex-wrap gap-2">
+                      {related.map((e) => (
+                        <li key={e.id}>
+                          <button type="button" onClick={() => show(e)} className={chipCls}>
+                            {e.question}
                           </button>
-                          <span aria-hidden="true">score {h.score.toFixed(2)}</span>
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

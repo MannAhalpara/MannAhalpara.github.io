@@ -206,7 +206,7 @@ export function MemoryDiagram() {
         </svg>
       </DrawSVG>
       <figcaption className="mono text-muted mt-4 flex justify-between gap-4">
-        <span>Fig. 01 — Conceptual overview</span>
+        <span>Fig. 01 - Conceptual overview</span>
         <span>Not a reported result</span>
       </figcaption>
     </figure>

@@ -6,6 +6,7 @@ import { scrollToTarget } from "@/lib/scroll";
 import { Magnetic } from "@/motion/Magnetic";
 import { RevealText } from "@/motion/RevealText";
 import { Clock } from "./Clock";
+import { ContactForm } from "./ContactForm";
 import { CopyEmail } from "./CopyEmail";
 
 export function Footer() {
@@ -23,7 +24,7 @@ export function Footer() {
         <p className="mono border-line-strong mb-10 flex items-center gap-3 border-t pt-4">
           <span className="dot text-[13px]">{mem.mem}</span>
           <span className="text-muted">
-            / Contact — open to {identity.openTo.join(", ").toLowerCase()}
+            / Contact - open to {identity.openTo.join(", ").toLowerCase()}
           </span>
         </p>
 
@@ -45,6 +46,11 @@ export function Footer() {
             <p className="mono text-muted mb-3">Write to</p>
             <CopyEmail className="serif link-u text-[clamp(30px,5.2vw,84px)] leading-none break-all sm:break-normal" />
             <p className="mono text-muted mt-3">Click to copy</p>
+
+            <div className="mt-16 max-w-[720px] md:mt-20">
+              <p className="mono text-muted mb-6">Or send a message</p>
+              <ContactForm />
+            </div>
           </div>
           <div className="col-span-12 flex flex-col gap-6 lg:col-span-5 lg:items-end">
             <div className="flex flex-wrap gap-3 lg:justify-end">

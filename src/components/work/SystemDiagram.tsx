@@ -343,7 +343,7 @@ export function SystemDiagram({
         </svg>
       </DrawSVG>
       <figcaption className="mono text-muted mt-4 flex justify-between gap-4">
-        <span>Fig. {String(figure).padStart(2, "0")} — System architecture</span>
+        <span>Fig. {String(figure).padStart(2, "0")} - System architecture</span>
         <span>Simplified</span>
       </figcaption>
     </figure>

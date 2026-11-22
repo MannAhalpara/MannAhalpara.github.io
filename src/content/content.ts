@@ -80,7 +80,7 @@ export const identity = {
   name: "Mann Ahalpara",
   firstName: "Mann",
   lastName: "Ahalpara",
-  title: "AI/ML Researcher — Conversational AI · LLMs · Information Retrieval",
+  title: "AI/ML Researcher - Conversational AI · LLMs · Information Retrieval",
   oneLiner:
     "AI/ML researcher building memory for conversational agents. Ranked #1 in my department, and I ship what I study.",
   location: "Ahmedabad, India",
@@ -90,7 +90,7 @@ export const identity = {
   email: "mannahalpara@gmail.com",
   linkedin: "https://www.linkedin.com/in/mannahalpara/",
   github: "https://github.com/MannAhalpara",
-  status: "Currently — Research Intern, Sentic Team @ NTU Singapore",
+  status: "Currently - Research Intern, Sentic Team @ NTU Singapore",
   openTo: ["Research collaborations", "MS/PhD opportunities", "AI/ML engineering roles"],
   resume: {
     href: "/resume/Mann_Ahalpara_Research.pdf",
@@ -207,7 +207,7 @@ export const education = [
   {
     degree: "B.Tech, Information & Communication Technology",
     school: "Adani University, Ahmedabad",
-    years: "2023–2027 (expected)",
+    years: "2023 - 2027 (expected)",
     result: "CGPA 9.13/10 · Ranked 1st in the ICT Department",
     coursework: [
       "Machine Learning",
@@ -573,5 +573,5 @@ export const navLinks = [
 export const footer = {
   ctaLine1: "Let's build",
   ctaLine2: "memory that lasts",
-  credit: "Designed & built by Mann Ahalpara — Next.js · GSAP · Lenis",
+  credit: "Designed & built by Mann Ahalpara - Next.js · GSAP · Lenis",
 } as const;

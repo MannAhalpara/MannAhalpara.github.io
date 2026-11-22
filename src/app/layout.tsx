@@ -15,8 +15,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(identity.siteUrl),
   title: {
-    default: `${identity.name} — AI/ML Researcher`,
-    template: `%s — ${identity.name}`,
+    default: `${identity.name} - AI/ML Researcher`,
+    template: `%s - ${identity.name}`,
   },
   description: identity.oneLiner,
   authors: [{ name: identity.name, url: identity.github }],
@@ -32,14 +32,14 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
-    title: `${identity.name} — AI/ML Researcher`,
+    title: `${identity.name} - AI/ML Researcher`,
     description: identity.oneLiner,
     siteName: identity.name,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${identity.name} — AI/ML Researcher`,
+    title: `${identity.name} - AI/ML Researcher`,
     description: identity.oneLiner,
   },
   alternates: { canonical: "/" },

@@ -73,7 +73,7 @@ export function Hero() {
         {/* corner meta */}
         <div className="mono text-muted flex items-start justify-between gap-4" data-hero-fade="0">
           <span>
-            {identity.location.split(",")[0]!.toUpperCase()}, IN — {identity.coords}
+            {identity.location.split(",")[0]!.toUpperCase()}, IN - {identity.coords}
           </span>
           <span className="hidden sm:inline">MEM_01 / INDEX</span>
           <span suppressHydrationWarning>©{new Date().getFullYear()}</span>

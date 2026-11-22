@@ -37,7 +37,7 @@ export function Publication() {
             {p.bullets.map((b, i) => (
               <li key={i} className="grid grid-cols-[1.6rem_1fr] gap-2 text-[16px]">
                 <span aria-hidden="true" className="text-muted">
-                  —
+                  -
                 </span>
                 {b}
               </li>

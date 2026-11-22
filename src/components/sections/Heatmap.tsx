@@ -76,7 +76,7 @@ export function Heatmap() {
         )}
       </svg>
       <figcaption className="mono text-muted mt-4 flex flex-wrap justify-between gap-2">
-        <span>Fig. 02 — 10 × 10 sector matrix</span>
+        <span>Fig. 02 - 10 × 10 sector matrix</span>
         <span>Illustrative · random-seeded</span>
       </figcaption>
     </figure>

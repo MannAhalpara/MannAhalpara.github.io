@@ -13,7 +13,7 @@ export function Research() {
     >
       <SectionHeader
         id="research"
-        kicker="Now — what is being written to memory"
+        kicker="Now - what is being written to memory"
         title="Research"
         headingId="research-title"
       />
@@ -24,14 +24,14 @@ export function Research() {
           <div className="lg:sticky lg:top-28">
             <p className="mono mb-6 inline-flex items-center gap-2.5">
               <span className="live-dot" aria-hidden="true" />
-              <span className="text-accent-text">Now</span> — Sentic Team, NTU Singapore
+              <span className="text-accent-text">Now</span> - Sentic Team, NTU Singapore
             </p>
             <h3 className="display text-[clamp(40px,4.6vw,72px)]">{r.role}</h3>
             <p className="mt-3 text-[18px]">{r.org}</p>
             <dl className="mono border-line-strong mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 border-y py-4">
               <dt className="text-muted">Dates</dt>
               <dd>
-                {r.start} — {r.end}
+                {r.start} - {r.end}
               </dd>
               <dt className="text-muted">Place</dt>
               <dd>{r.place}, remote</dd>

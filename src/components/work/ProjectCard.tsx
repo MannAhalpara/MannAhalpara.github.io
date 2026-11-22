@@ -10,7 +10,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       href={`/work/${p.slug}`}
       data-cursor="VIEW"
       className="project-card ticked group bg-surface/60 hover:bg-surface flex h-full flex-col transition-colors duration-300"
-      aria-label={`${p.title} — case study`}
+      aria-label={`${p.title} - case study`}
     >
       <span className="tick-b" aria-hidden="true" />
       <div className="border-line-strong flex items-center justify-between gap-3 border-b px-4 py-3">

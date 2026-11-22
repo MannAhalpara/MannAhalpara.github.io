@@ -80,7 +80,7 @@ export function Nav() {
         >
           <Link
             href="/"
-            aria-label="Mann Ahalpara — home"
+            aria-label="Mann Ahalpara - home"
             className="dot text-[22px] leading-none tracking-tight"
             onClick={(e) => {
               if (isHome) {

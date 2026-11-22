@@ -1,14 +1,12 @@
 import type { NextConfig } from "next";
 
 /**
- * Static export: `next build` writes plain HTML/CSS/JS to `out/`, which GitHub
- * Pages serves at mannahalpara.me (see .github/workflows/deploy.yml).
- * Pages has no server, so no image optimizer and no custom headers.
+ * Deployed on Vercel. Pages are still prerendered at build time; the only
+ * server code is the contact form's route handler (src/app/api/contact).
+ * A static export (`output: "export"`) can't serve that POST route.
  */
 const nextConfig: NextConfig = {
-  output: "export",
-  // emit work/answeriq/index.html, not answeriq.html next to an answeriq/ folder,
-  // which GitHub Pages would resolve to the folder and 404
+  // keep the existing /work/answeriq/ style URLs
   trailingSlash: true,
   reactStrictMode: true,
   poweredByHeader: false,

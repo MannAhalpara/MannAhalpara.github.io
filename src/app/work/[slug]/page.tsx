@@ -129,7 +129,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
             />
           </ViewTransition>
           <p className="mono bg-paper/85 text-muted absolute bottom-3 left-3 px-2 py-1">
-            Abstract preview — not a screenshot
+            Abstract preview - not a screenshot
           </p>
         </div>
       </div>
@@ -179,7 +179,7 @@ export default async function CaseStudy({ params }: PageProps<"/work/[slug]">) {
             {p.details.map((d, i) => (
               <li key={i} className="grid grid-cols-[1.6rem_1fr] text-[18px] leading-relaxed">
                 <span aria-hidden="true" className="text-muted">
-                  —
+                  -
                 </span>
                 {d}
               </li>

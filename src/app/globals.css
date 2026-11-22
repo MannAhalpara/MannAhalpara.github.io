@@ -355,10 +355,31 @@
     animation: memflash 1.6s var(--ease-expo);
   }
 
+  /* "Ask my memory": links and related chips fade in under the typed answer */
+  .ask-fade {
+    animation: askfade 0.6s var(--ease-expo) 0.35s both;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ask-fade {
+      animation: none;
+    }
+  }
+
   /* inverted dithered preview in dark mode */
   .dither {
     filter: invert(var(--invert));
     image-rendering: pixelated;
+  }
+}
+
+@keyframes askfade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 

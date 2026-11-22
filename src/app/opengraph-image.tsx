@@ -6,7 +6,7 @@ import { identity } from "@/content/content";
 // static export (GitHub Pages): render once at build time
 export const dynamic = "force-static";
 
-export const alt = `${identity.name} — ${identity.title}`;
+export const alt = `${identity.name} - ${identity.title}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -93,7 +93,7 @@ export default async function OG() {
           <span>MEM_01 / INDEX</span>
           <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ width: 12, height: 12, borderRadius: 12, background: "#7B1E22" }} />
-            AHMEDABAD, IN — {identity.coords}
+            AHMEDABAD, IN - {identity.coords}
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
@@ -123,7 +123,7 @@ export default async function OG() {
             letterSpacing: 2,
           }}
         >
-          <span>AI/ML RESEARCHER — CONVERSATIONAL AI · LLMS · IR</span>
+          <span>AI/ML RESEARCHER - CONVERSATIONAL AI · LLMS · IR</span>
           <span style={{ background: "#7B1E22", color: "#F3EEE6", padding: "4px 10px" }}>
             RESEARCH INTERN @ NTU SENTIC
           </span>
