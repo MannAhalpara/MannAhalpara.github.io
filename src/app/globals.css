@@ -14,6 +14,7 @@
   --accent: #7B1E22; /* oxblood: fills (buttons, banner, dots) */
   --accent-ink: #F3EEE6; /* text ON the accent (now light, was dark) */
   --accent-text: #7B1E22; /* accent used as text (nav brackets, links) */
+  --spider: #7B1E22; /* 404 pixel spider */
   --invert: 0;
   --gutter: clamp(16px, 3vw, 40px);
   --nav-h: 64px;
@@ -32,6 +33,7 @@
     --accent: #7B1E22;
     --accent-ink: #F3EEE6;
     --accent-text: #E38A84; /* lighter rose so accent text is readable on dark */
+    --spider: #B3343A;
     --invert: 1;
     color-scheme: dark;
   }
@@ -47,6 +49,7 @@
   --accent: #7B1E22;
   --accent-ink: #F3EEE6;
   --accent-text: #E38A84;
+  --spider: #B3343A;
   --invert: 1;
   color-scheme: dark;
 }
@@ -622,5 +625,21 @@ html.js-motion [data-hero-fade="3"] {
   ::view-transition-old(*),
   ::view-transition-new(*) {
     animation: none !important;
+  }
+}
+
+/* ------------------------------------------------------- 404 spider */
+@media (prefers-reduced-motion: no-preference) {
+  .pixel-spider {
+    animation: spider-bob 2.6s ease-in-out infinite;
+  }
+}
+@keyframes spider-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
   }
 }
